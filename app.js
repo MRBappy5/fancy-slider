@@ -1,8 +1,8 @@
 const imagesArea = document.querySelector('.images');
-const errorMessage = document.getElementById('error-message');
+const error = document.getElementById('error-text');
 const gallery = document.querySelector('.gallery');
 const galleryHeader = document.querySelector('.gallery-header');
-const searchInput = document.getElementById('search');
+const srcItem = document.getElementById('search');
 const searchBtn = document.getElementById('search-btn');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
@@ -16,17 +16,17 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images
 const showImages = (images) => {
-  if (images.length === 0 || searchInput.value === '') {
+  if (images.length === 0 || srcItem.value === '') {
     imagesArea.style.display = 'none';
-    errorMessage.style.display = 'block';
+    error.style.display = 'block';
     // show error message
-    if (searchInput.value === '') {
-      errorMessage.innerHTML = `<h1 class="text-center text-danger mt-4">The search box cannot be empty</h1>`;
+    if (srcItem.value === '') {
+      error.innerHTML = `<h1 class="text-success mt-4">What the hell are you looking for?</h1>`;
     } else {
-      errorMessage.innerHTML = `<h1 class="text-center text-danger mt-4">This item does not exist</h1>`;
+      error.innerHTML = `<h1 class="text-success mt-4">Not matched</h1>`;
     }
   } else {
-    errorMessage.style.display = 'none';
+    error.style.display = 'none';
     imagesArea.style.display = 'block';
     gallery.innerHTML = '';
     // show gallery title
@@ -37,15 +37,15 @@ const showImages = (images) => {
       div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
       gallery.appendChild(div);
     });
-    searchInput.value = '';
+    srcItem.value = '';
   }
   document.getElementById('duration').value = '';
   spinnerItem(false);
 };
 
-// Search to hit Enter
-searchInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
+// Enter button
+srcItem.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
     searchBtn.click();
   }
 });
@@ -99,9 +99,6 @@ const createSlider = () => {
   if (duration >= 1000) {
     duration = duration;
   } else {
-    // alert(
-    //   'Duration cannot be negative. So the default duration has been set to 1 second.'
-    // );
     duration = 1000;
   }
   sliders.forEach((slide) => {
@@ -159,7 +156,7 @@ sliderBtn.addEventListener('click', function () {
 const spinnerItem = (show) => {
   const spinner = document.getElementById('spinner-item');
   show ? spinner.classList.remove('d-none') : spinner.classList.add('d-none');
-  errorMessage.classList.toggle('d-none');
+  error.classList.toggle('d-none');
   imagesArea.classList.toggle('d-none');
 };
 
