@@ -40,7 +40,7 @@ const showImages = (images) => {
     searchInput.value = '';
   }
   document.getElementById('duration').value = '';
-  loadingSpinner(false);
+  spinnerItem(false);
 };
 
 // Search to hit Enter
@@ -51,13 +51,14 @@ searchInput.addEventListener('keypress', (e) => {
 });
 
 const getImages = (query) => {
-  loadingSpinner(true);
+  spinnerItem(true);
   fetch(
     `https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`
   )
     .then((response) => response.json())
     .then((data) => showImages(data.hits))
     .catch((err) => console.log(err));
+    
 };
 
 let slideIndex = 0;
@@ -71,6 +72,7 @@ const selectItem = (event, img) => {
   } else {
     sliders.splice(item, 1);
   }
+  
 };
 var timer;
 const createSlider = () => {
@@ -97,9 +99,9 @@ const createSlider = () => {
   if (duration >= 1000) {
     duration = duration;
   } else {
-    alert(
-      'Duration value cannot be negative or Less than 1 second. So the default duration is set to 1 second.'
-    );
+    // alert(
+    //   'Duration cannot be negative. So the default duration has been set to 1 second.'
+    // );
     duration = 1000;
   }
   sliders.forEach((slide) => {
@@ -154,9 +156,10 @@ sliderBtn.addEventListener('click', function () {
   createSlider();
 });
 
-const loadingSpinner = (show) => {
-  const spinner = document.getElementById('loading-spinner');
+const spinnerItem = (show) => {
+  const spinner = document.getElementById('spinner-item');
   show ? spinner.classList.remove('d-none') : spinner.classList.add('d-none');
   errorMessage.classList.toggle('d-none');
   imagesArea.classList.toggle('d-none');
 };
+
