@@ -58,7 +58,7 @@ const getImages = (query) => {
     .then((response) => response.json())
     .then((data) => showImages(data.hits))
     .catch((err) => console.log(err));
-    
+
 };
 
 let slideIndex = 0;
@@ -72,7 +72,7 @@ const selectItem = (event, img) => {
   } else {
     sliders.splice(item, 1);
   }
-  
+
 };
 var timer;
 const createSlider = () => {
